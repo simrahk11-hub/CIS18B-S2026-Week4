@@ -1,35 +1,40 @@
 package edu.norcocollege.cis18b.weekx.mini10;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+public class AlertValidatorTest 
+{
 
-public class AlertValidatorTest {
+    private final AlertValidator validator = new AlertValidator();
+
     @Test
-    void shouldAcceptValidAlert() {
-        AlertValidator validator = new AlertValidator();
-        Alert alert = new Alert(1, "CPU critical", AlertLevel.CRITICAL);
+    public void shouldRejectNullLevel() 
+    {
+        Alert alert = new Alert(null, "This is a message");
 
-        // TODO: Replace null with a lambda that validates the alert.
-        assertDoesNotThrow(null);
+        assertThrows(IllegalArgumentException.class, () -> {
+            validator.validate(alert);
+        });
     }
 
     @Test
-    void shouldRejectBlankMessage() {
-        AlertValidator validator = new AlertValidator();
-        Alert alert = new Alert(1, "   ", AlertLevel.WARNING);
+    public void shouldRejectBlankMessage() 
+    {
+        Alert alert = new Alert("HIGH", "   "); // blank message
 
-        // TODO: Replace null with a lambda that validates the alert.
-        assertThrows(InvalidAlertException.class, null);
+        assertThrows(IllegalArgumentException.class, () -> {
+            validator.validate(alert);
+        });
     }
 
     @Test
-    void shouldRejectNullLevel() {
-        AlertValidator validator = new AlertValidator();
-        Alert alert = new Alert(1, "Disk usage high", null);
+    public void shouldAcceptValidAlert() 
+    {
+        Alert alert = new Alert("HIGH", "This is a valid message");
 
-        // TODO: Replace null with a lambda that validates the alert.
-        assertThrows(InvalidAlertException.class, null);
+        assertDoesNotThrow(() -> {
+            validator.validate(alert);
+        });
     }
 }

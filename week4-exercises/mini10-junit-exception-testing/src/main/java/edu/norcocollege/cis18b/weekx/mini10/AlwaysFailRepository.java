@@ -1,24 +1,9 @@
 package edu.norcocollege.cis18b.weekx.mini10;
 
-import java.util.List;
-
 public class AlwaysFailRepository implements AlertRepository 
 {
-
-    @Override
-    public void save(Alert alert)
-    throws AlertStorageException 
+    public void store(Alert alert) throws AlertStorageException 
     {
-
-        throw new AlertStorageException(
-        "Storage failed");
-
+        throw new AlertStorageException("Failing on purpose");
     }
-
-    @Override
-    public List<Alert> findAll() 
-    {
-        return List.of();
-    }
-
 }

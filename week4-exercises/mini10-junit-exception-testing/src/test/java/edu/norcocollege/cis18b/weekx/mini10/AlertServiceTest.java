@@ -1,27 +1,30 @@
 package edu.norcocollege.cis18b.weekx.mini10;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class AlertServiceTest {
+public class AlertServiceTest 
+{
+
     @Test
-    void shouldStoreSuccessfullyProcessedAlert() throws Exception {
-        AlertService service = new AlertService(new InMemoryAlertRepository());
+    void shouldStoreSuccessfullyProcessedAlert() throws Exception 
+    {
+        InMemoryAlertRepository repo = new InMemoryAlertRepository();
+        AlertService service = new AlertService(repo);
         Alert alert = new Alert(1, "Unauthorized login attempt", AlertLevel.CRITICAL);
 
-        // TODO: Process the alert.
-        // TODO: Assert that one alert was stored.
-        assertEquals(1, 0);
+        service.processAlert(alert);
+
+        assertEquals(1, repo.countAlerts());
     }
 
     @Test
-    void shouldThrowWhenRepositoryFails() {
+    void shouldThrowWhenRepositoryFails() 
+    {
         AlertService service = new AlertService(new AlwaysFailRepository());
         Alert alert = new Alert(2, "Disk failure", AlertLevel.CRITICAL);
 
-        // TODO: Replace null with a lambda that calls processAlert(alert).
-        assertThrows(AlertStorageException.class, null);
+        assertThrows(AlertStorageException.class, () -> service.processAlert(alert));
     }
 }

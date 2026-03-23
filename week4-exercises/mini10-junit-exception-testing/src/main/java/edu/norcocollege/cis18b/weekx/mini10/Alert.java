@@ -2,22 +2,22 @@ package edu.norcocollege.cis18b.weekx.mini10;
 
 public class Alert 
 {
-    private String message;
-    private int severity;
 
-    public Alert(String message, int severity) {
+    private final String level;
+    private final String message;
 
+    public Alert(String level, String message) 
+    {
+        this.level = level;
         this.message = message;
-        this.severity = severity;
     }
 
-    public String getMessage() 
+    public Alert(int id, String message, AlertLevel level) 
     {
-        return message;
+        this.level = level.name(); // convert enum to string
+        this.message = message;
     }
 
-    public int getSeverity() 
-    {
-        return severity;
-    }
+    public String getLevel() { return level; }
+    public String getMessage() { return message; }
 }

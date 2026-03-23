@@ -4,10 +4,18 @@ public class AlertApp
 {
     public static void main(String[] args) 
     {
-        Alert alert = new Alert("Test Alert", 5);
+        Alert alert = new Alert("HIGH", "Warning message");
+
         AlertValidator validator = new AlertValidator();
 
-        System.out.println("Alert valid? " + validator.isValid(alert));
-        System.out.println("Validation message: " + validator.validateMessage(alert));
+        try 
+        {
+            validator.validate(alert);
+            System.out.println("Alert is valid");
+        } 
+        catch(Exception e) 
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
